@@ -3,12 +3,18 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gogo-lib/gfshutdown"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/history", func(w http.ResponseWriter, r *http.Request) {
+		// Log GET / history  before shutdown
+		gfshutdown.ExecBeforeShutDown(func() {
+			now := time.Now()
+			log.Printf("GET / at: %s", now)
+		})
 		w.Write([]byte("Hello World"))
 	})
 
